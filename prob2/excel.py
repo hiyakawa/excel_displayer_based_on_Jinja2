@@ -19,7 +19,6 @@ def select():
 @app.route('/result', methods = ['GET', 'POST'])
 def print_table():
     if request.method == 'POST':
-        print(request.files['file'])
         f = request.files['file']
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
