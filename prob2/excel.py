@@ -20,11 +20,14 @@ def select():
 def print_table():
     if request.method == 'POST':
         f = request.files['file']
+
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
+
         if f:
             file_name = secure_filename(f.filename)
             valid_types = ['xls', 'xlsx']
+
             if file_name.split('.')[-1] in valid_types:
                 upload_path = os.path.join(upload_dir, file_name)
                 f.save(upload_path)
@@ -39,12 +42,15 @@ def print_table():
                 rows = [table.row_values(i) for i in range(1, nrows)]
 
                 return render_template('result.html', titles=titles, rows=rows)
+
             else:
                 flash('Invalid file type', 'danger')
+                return redirect('/select')
+
         else:
             flash('Please select the file to be uploaded', 'danger')
-    return render_template('input.html')
 
+    return render_template('input.html')
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', debug = True)
